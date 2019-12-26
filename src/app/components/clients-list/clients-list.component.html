@@ -1,1 +1,18 @@
-<p>clients-list works!</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let client of clients">
+            <td scope="row">{{ client.firstName }} {{ client.lastName }}</td>
+            <td>{{ client.phone }}</td>
+            <td>{{ client.email }}</td>
+        </tr>
+       
+    </tbody>
+</table>
