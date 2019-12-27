@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Client } from './../../models/client';
 import { ClientService } from './../../services/client.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,7 +12,7 @@ export class ClientsListComponent implements OnInit {
 
   clients: Client[] = [];
 
-  constructor(private clientService: ClientService) { }
+  constructor(private clientService: ClientService, private toastService: ToastrService) { }
 
   ngOnInit() {
     this.clientService.getClients() 
@@ -23,8 +24,18 @@ export class ClientsListComponent implements OnInit {
 
   destroyClient(id: string) {
     this.clientService.deleteClient(id)
-        .then()
-        .catch();
+        .then(() => {
+          this.toastService.info("Client Deleted", "Info", {
+            timeOut: 5000,
+            positionClass: 'toast-bottom-left',
+            tapToDismiss: true
+          })
+        })
+        .catch((err) => this.toastService.error(err.message, "error", {
+          timeOut: 5000,
+          positionClass: 'toast-bottom-left',
+          tapToDismiss: true
+        }));
   }
 
 }

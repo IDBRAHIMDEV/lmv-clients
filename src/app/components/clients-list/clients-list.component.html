@@ -19,6 +19,7 @@
                     <th>Name</th>
                     <th>Phone</th>
                     <th>Email</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +27,9 @@
                     <td scope="row">{{ client.firstName }} {{ client.lastName }}</td>
                     <td>{{ client.phone }}</td>
                     <td>{{ client.email }}</td>
+                    <td class="text-right" nowrap>
+                        <button (click)="destroyClient(client.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                    </td>
                 </tr>
                
             </tbody>
