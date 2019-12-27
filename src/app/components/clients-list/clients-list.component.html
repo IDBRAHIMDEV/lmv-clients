@@ -19,14 +19,18 @@
                     <th>Name</th>
                     <th>Phone</th>
                     <th>Email</th>
+                    <th>Date</th>
+                    <th>Balance</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let client of clients">
-                    <td scope="row">{{ client.firstName }} {{ client.lastName }}</td>
+                    <td scope="row">{{ client.firstName | titlecase }} {{ client.lastName | uppercase }}</td>
                     <td>{{ client.phone }}</td>
                     <td>{{ client.email }}</td>
+                    <td>{{ client.updated_at | date:'dd/MM/yyyy h:mm:ss' }}</td>
+                    <td>{{ client.balance | currency:'GBP':'symbol':'1.3-3' }}</td>
                     <td class="text-right" nowrap>
                         <a [routerLink]="['/clients', client.id, 'edit']" 
                            class="mr-1 btn btn-sm btn-warning">

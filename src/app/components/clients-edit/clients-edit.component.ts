@@ -2,7 +2,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Client } from './../../models/client';
 import { ClientService } from './../../services/client.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-clients-edit',
@@ -19,15 +19,33 @@ export class ClientsEditComponent implements OnInit {
     balance: new FormControl(0, Validators.required)
   });
 
-  constructor(private route: ActivatedRoute, private clientService: ClientService) { }
+  idClient: string = "";
+  constructor(private router: Router, private route: ActivatedRoute, private clientService: ClientService) { }
 
   ngOnInit() {
      this.route.params.subscribe(params => {
+
+      this.idClient = params.id;
+
         this.clientService.getOneClient(params.id)
             .subscribe((res: Client) => {
                 this.clientForm.patchValue(res);
             })
      });
+  }
+
+  updateClient() {
+
+    let data: Client = {
+      ...this.clientForm.value,
+      updated_at: Date()
+    }
+
+
+    this.clientService.updateClient(this.idClient, data)
+        .then(() => {
+            this.router.navigate(['/clients']);
+        })
   }
 
 }

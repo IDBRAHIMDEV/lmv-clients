@@ -6,4 +6,5 @@ export interface Client {
     phone: string;
     balance: number;
     created_at?: Date;
+    updated_at?: Date;
 }

@@ -33,4 +33,8 @@ export class ClientService {
    getOneClient(id: string) {
      return this.afs.collection('clients').doc(id).valueChanges();
    }
+
+   updateClient(id, data: Client) {
+     return this.afs.collection('clients').doc(id).update(data);
+   }
 }

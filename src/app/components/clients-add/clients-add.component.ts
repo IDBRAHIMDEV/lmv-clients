@@ -1,3 +1,4 @@
+import { Client } from './../../models/client';
 import { ClientService } from './../../services/client.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -40,7 +41,12 @@ export class ClientsAddComponent implements OnInit {
       return;
     }
 
-    this.clientService.postClient(this.clientForm.value)
+    let data: Client = {
+      ...this.clientForm.value,
+      created_at: new Date()
+    }
+
+    this.clientService.postClient(data)
         .then(() => {
           this.toastService.success("Client added SuccessFully", "Created", {
             timeOut: 5000,
