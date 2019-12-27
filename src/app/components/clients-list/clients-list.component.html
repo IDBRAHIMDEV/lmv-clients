@@ -28,7 +28,13 @@
                     <td>{{ client.phone }}</td>
                     <td>{{ client.email }}</td>
                     <td class="text-right" nowrap>
-                        <button (click)="destroyClient(client.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                        <a [routerLink]="['/clients', client.id, 'edit']" 
+                           class="mr-1 btn btn-sm btn-warning">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                        <button (click)="destroyClient(client.id)" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash"></i>
+                        </button>
                     </td>
                 </tr>
                

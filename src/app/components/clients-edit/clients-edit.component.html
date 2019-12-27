@@ -1,1 +1,95 @@
-<p>clients-edit works!</p>
+<div class="row my-4">
+    <div class="col-md-6">
+        <h1>Edit client</h1>
+    </div>
+    <div class="col-md-6 text-right">
+        <a routerLink="/clients" class="btn btn-link">
+            <i class="fa fa-arrow-left-o"></i> Back to list
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <form [formGroup]="clientForm" (ngSubmit)="persistClient()">
+            <div class="form-group">
+                <label for="firstName">FirstName</label>
+                <input 
+                [ngClass]="{
+                    'is-invalid': clientForm.get('firstName').invalid && clientForm.get('firstName').touched,
+                    'is-valid': clientForm.get('firstName').valid
+                }" 
+                formControlName="firstName" 
+                id="firstName" 
+                type="text" 
+                class="form-control">
+                <div class="invalid-feedback" *ngIf="clientForm.get('firstName').invalid && clientForm.get('firstName').touched">
+                    <div *ngIf="clientForm.get('firstName').errors.required">
+                        This is field is Required !
+                    </div>
+                    <div *ngIf="clientForm.get('firstName').errors.minlength">
+                        This field should be great then 3 caracters !
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastName">LastName</label>
+                <input
+                [ngClass]="{
+                    'is-invalid': clientForm.get('lastName').invalid && clientForm.get('lastName').touched,
+                    'is-valid': clientForm.get('lastName').valid
+                }"
+                formControlName="lastName" id="lastName" type="text" class="form-control">
+                <div class="invalid-feedback" *ngIf="clientForm.get('lastName').invalid && clientForm.get('lastName').touched">
+                    <div *ngIf="clientForm.get('lastName').errors.required">
+                        This is field is Required !
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                [ngClass]="{
+                    'is-invalid': clientForm.get('email').invalid && clientForm.get('email').touched,
+                    'is-valid': clientForm.get('email').valid
+                }"
+                formControlName="email" id="email" type="text" class="form-control">
+                <div class="invalid-feedback" *ngIf="clientForm.get('email').invalid && clientForm.get('email').touched">
+                    <div *ngIf="clientForm.get('email').errors.required">
+                        This is field is Required !
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input
+                [ngClass]="{
+                    'is-invalid': clientForm.get('phone').invalid && clientForm.get('phone').touched,
+                    'is-valid': clientForm.get('phone').valid
+                }"
+                formControlName="phone" id="phone" type="text" class="form-control">
+                <div class="invalid-feedback" *ngIf="clientForm.get('phone').invalid && clientForm.get('phone').touched">
+                    <div *ngIf="clientForm.get('phone').errors.required">
+                        This is field is Required !
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="balance">Balance</label>
+                <input
+                [ngClass]="{
+                    'is-invalid': clientForm.get('balance').invalid && clientForm.get('balance').touched,
+                    'is-valid': clientForm.get('balance').valid
+                }"
+                formControlName="balance" id="balance" type="number" class="form-control">
+                <div class="invalid-feedback" *ngIf="clientForm.get('balance').invalid && clientForm.get('balance').touched">
+                    <div *ngIf="clientForm.get('balance').errors.required">
+                        This is field is Required !
+                    </div>
+                </div>
+            </div>
+            
+            <button  class="btn btn-warning btn-block"><i class="fa fa-refresh"></i> Update client</button>
+        </form>
+    </div>
+</div>
