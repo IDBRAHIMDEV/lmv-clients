@@ -15,7 +15,16 @@ export class ClientsListComponent implements OnInit {
 
   ngOnInit() {
     this.clientService.getClients() 
-        .subscribe((res: Client[]) => this.clients = res)
+        .subscribe((res: Client[]) => {
+          this.clients = res
+          console.log(res)
+        })
+  }
+
+  destroyClient(id: string) {
+    this.clientService.deleteClient(id)
+        .then()
+        .catch();
   }
 
 }

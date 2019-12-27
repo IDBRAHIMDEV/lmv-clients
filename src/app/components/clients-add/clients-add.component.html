@@ -11,7 +11,7 @@
 
 <div class="row">
     <div class="col-md-6 mx-auto">
-        <form [formGroup]="clientForm">
+        <form [formGroup]="clientForm" (ngSubmit)="persistClient()">
             <div class="form-group">
                 <label for="firstName">FirstName</label>
                 <input 
@@ -34,22 +34,62 @@
             </div>
             <div class="form-group">
                 <label for="lastName">LastName</label>
-                <input formControlName="lastName" id="lastName" type="text" class="form-control">
+                <input
+                [ngClass]="{
+                    'is-invalid': clientForm.get('lastName').invalid && clientForm.get('lastName').touched,
+                    'is-valid': clientForm.get('lastName').valid
+                }"
+                formControlName="lastName" id="lastName" type="text" class="form-control">
+                <div class="invalid-feedback" *ngIf="clientForm.get('lastName').invalid && clientForm.get('lastName').touched">
+                    <div *ngIf="clientForm.get('lastName').errors.required">
+                        This is field is Required !
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input formControlName="email" id="email" type="text" class="form-control">
+                <input
+                [ngClass]="{
+                    'is-invalid': clientForm.get('email').invalid && clientForm.get('email').touched,
+                    'is-valid': clientForm.get('email').valid
+                }"
+                formControlName="email" id="email" type="text" class="form-control">
+                <div class="invalid-feedback" *ngIf="clientForm.get('email').invalid && clientForm.get('email').touched">
+                    <div *ngIf="clientForm.get('email').errors.required">
+                        This is field is Required !
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="phone">Phone</label>
-                <input formControlName="phone" id="phone" type="text" class="form-control">
+                <input
+                [ngClass]="{
+                    'is-invalid': clientForm.get('phone').invalid && clientForm.get('phone').touched,
+                    'is-valid': clientForm.get('phone').valid
+                }"
+                formControlName="phone" id="phone" type="text" class="form-control">
+                <div class="invalid-feedback" *ngIf="clientForm.get('phone').invalid && clientForm.get('phone').touched">
+                    <div *ngIf="clientForm.get('phone').errors.required">
+                        This is field is Required !
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="balance">Balance</label>
-                <input formControlName="balance" id="balance" type="number" class="form-control">
+                <input
+                [ngClass]="{
+                    'is-invalid': clientForm.get('balance').invalid && clientForm.get('balance').touched,
+                    'is-valid': clientForm.get('balance').valid
+                }"
+                formControlName="balance" id="balance" type="number" class="form-control">
+                <div class="invalid-feedback" *ngIf="clientForm.get('balance').invalid && clientForm.get('balance').touched">
+                    <div *ngIf="clientForm.get('balance').errors.required">
+                        This is field is Required !
+                    </div>
+                </div>
             </div>
             
-            <button class="btn btn-primary btn-block"><i class="fa fa-send"></i> Add client</button>
+            <button  class="btn btn-primary btn-block"><i class="fa fa-send"></i> Add client</button>
         </form>
     </div>
 </div>
