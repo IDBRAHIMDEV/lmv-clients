@@ -1,3 +1,7 @@
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { AuthService } from './../../services/auth.service';
+import { AuthData } from './../../models/user';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +11,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  user: AuthData = {
+    email: '',
+    password: ''
+  }
+
+  constructor(
+        private authService: AuthService, 
+        private router: Router, 
+        private toastService: ToastrService
+        ) { }
 
   ngOnInit() {
+  }
+
+  signIn() {
+    this.authService.login(this.user)
+        .then(() => {
+          this.toastService.info("You'are Logged SuccessFully", "Created", {
+            timeOut: 5000,
+            positionClass: 'toast-bottom-left',
+            tapToDismiss: true
+          })
+          this.router.navigate(['/clients'])
+        })
+        .catch((err) => {
+          this.toastService.error(err.message, "Error", {
+            timeOut: 5000,
+            positionClass: 'toast-bottom-left',
+            tapToDismiss: true
+          })
+          
+        })
   }
 
 }

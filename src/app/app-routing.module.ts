@@ -1,3 +1,4 @@
+import { AuthGuard } from './guards/auth.guard';
 import { ClientsAddComponent } from './components/clients-add/clients-add.component';
 import { ClientsEditComponent } from './components/clients-edit/clients-edit.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -9,10 +10,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
-  {path: "", redirectTo: '/clients', pathMatch: 'full' },
+  {path: "", redirectTo: '/clients', pathMatch: 'full', canActivate: [AuthGuard] },
   {path: "clients", component: ClientsListComponent },
-  {path: "clients/add", component: ClientsAddComponent },
-  {path: "clients/:id/edit", component: ClientsEditComponent },
+  {path: "clients/add", component: ClientsAddComponent, canActivate: [AuthGuard] },
+  {path: "clients/:id/edit", component: ClientsEditComponent, canActivate: [AuthGuard] },
   {path: "register", component: RegisterComponent },
   {path: "login", component: LoginComponent },
   {path: "**", component: PageNotFoundComponent },

@@ -6,19 +6,25 @@
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item" routerLinkActive="active">
+            <li *ngIf="currentUser" class="nav-item" routerLinkActive="active">
                 <a class="nav-link" routerLink="/clients">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
+            <li *ngIf="currentUser" class="nav-item" routerLinkActive="active">
                 <a class="nav-link" routerLink="/clients/add">New</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item" routerLinkActive="active">
+            <li *ngIf="!currentUser" class="nav-item" routerLinkActive="active">
                 <a routerLink="/register" class="nav-link">Register</a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
+            <li *ngIf="!currentUser" class="nav-item" routerLinkActive="active">
                 <a routerLink="/login" class="nav-link">Login</a>
+            </li>
+            <li *ngIf="currentUser" class="nav-item" routerLinkActive="active">
+                <a routerLink="/login" class="nav-link">{{ currentUser.email }}</a>
+            </li>
+            <li *ngIf="currentUser" class="nav-item" routerLinkActive="active">
+                <button (click)="signOut()" class="nav-link btn-logout">Logout</button>
             </li>
         </ul>
     </div>

@@ -11,13 +11,15 @@ import { Component, OnInit } from '@angular/core';
 export class ClientsListComponent implements OnInit {
 
   clients: Client[] = [];
+  resClients: Client[] = [];
+  search: string = "";
 
   constructor(private clientService: ClientService, private toastService: ToastrService) { }
 
   ngOnInit() {
     this.clientService.getClients() 
         .subscribe((res: Client[]) => {
-          this.clients = res;
+          this.resClients = this.clients = res;
         })
   }
 
@@ -35,6 +37,20 @@ export class ClientsListComponent implements OnInit {
           positionClass: 'toast-bottom-left',
           tapToDismiss: true
         }));
+  }
+
+  searchClients() {
+
+    if(this.search.length >= 3) {
+
+      this.resClients = this.clients.filter((client: Client) => (client.firstName.includes(this.search) ||
+          client.lastName.includes(this.search) ||
+          client.email.includes(this.search) ||
+          client.phone.includes(this.search))
+      );
+    }else {
+      this.resClients = this.clients;
+    }
   }
 
 }
