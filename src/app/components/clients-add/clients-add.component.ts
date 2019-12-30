@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Client } from './../../models/client';
 import { ClientService } from './../../services/client.service';
 import { Component, OnInit } from '@angular/core';
@@ -21,11 +22,17 @@ export class ClientsAddComponent implements OnInit {
     balance: new FormControl(0, Validators.required)
   });
 
+  currentUser = null;
+
   constructor(
       private clientService: ClientService, 
       private router: Router,
-      private toastService: ToastrService
-      ) { }
+      private toastService: ToastrService,
+      private authService: AuthService
+      ) { 
+        this.authService.userAuthenticated()
+        .subscribe(user => this.currentUser = user)
+      }
 
   ngOnInit() {
   }
@@ -43,7 +50,8 @@ export class ClientsAddComponent implements OnInit {
 
     let data: Client = {
       ...this.clientForm.value,
-      created_at: new Date()
+      created_at: new Date(),
+      user_id: this.currentUser.uid
     }
 
     this.clientService.postClient(data)

@@ -12,14 +12,15 @@ export class ClientService {
       
    }
 
-   getClients() {
-     return this.afs.collection('clients').snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Client;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))
-    );
+   getClients(userId) {
+     return this.afs.collection('clients', ref => ref.where('user_id', '==', userId))
+                .snapshotChanges().pipe(
+                  map(actions => actions.map(a => {
+                    const data = a.payload.doc.data() as Client;
+                    const id = a.payload.doc.id;
+                    return { id, ...data };
+                  }))
+                );
    }
 
    postClient(client: Client) {

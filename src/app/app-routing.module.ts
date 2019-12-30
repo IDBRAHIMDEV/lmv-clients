@@ -11,9 +11,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {path: "", redirectTo: '/clients', pathMatch: 'full', canActivate: [AuthGuard] },
-  {path: "clients", component: ClientsListComponent },
-  {path: "clients/add", component: ClientsAddComponent, canActivate: [AuthGuard] },
-  {path: "clients/:id/edit", component: ClientsEditComponent, canActivate: [AuthGuard] },
+  {path: "clients", canActivate: [AuthGuard], children: [
+
+    {path: "", component: ClientsListComponent },
+    {path: "add", component: ClientsAddComponent },
+    {path: ":id/edit", component: ClientsEditComponent },
+  ] },
   {path: "register", component: RegisterComponent },
   {path: "login", component: LoginComponent },
   {path: "**", component: PageNotFoundComponent },

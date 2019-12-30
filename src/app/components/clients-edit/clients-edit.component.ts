@@ -1,15 +1,16 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Client } from './../../models/client';
 import { ClientService } from './../../services/client.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-clients-edit',
   templateUrl: './clients-edit.component.html',
   styleUrls: ['./clients-edit.component.css']
 })
-export class ClientsEditComponent implements OnInit {
+export class ClientsEditComponent implements OnInit, OnDestroy {
 
   clientForm = new FormGroup({
     firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -19,6 +20,8 @@ export class ClientsEditComponent implements OnInit {
     balance: new FormControl(0, Validators.required)
   });
 
+  clientSubscription: Subscription;
+
   idClient: string = "";
   constructor(private router: Router, private route: ActivatedRoute, private clientService: ClientService) { }
 
@@ -27,7 +30,7 @@ export class ClientsEditComponent implements OnInit {
 
       this.idClient = params.id;
 
-        this.clientService.getOneClient(params.id)
+       this.clientSubscription = this.clientService.getOneClient(params.id)
             .subscribe((res: Client) => {
                 this.clientForm.patchValue(res);
             })
@@ -46,6 +49,11 @@ export class ClientsEditComponent implements OnInit {
         .then(() => {
             this.router.navigate(['/clients']);
         })
+  }
+
+
+  ngOnDestroy() {
+     this.clientSubscription.unsubscribe();
   }
 
 }

@@ -26,23 +26,11 @@ export class LoginComponent implements OnInit {
   }
 
   signIn() {
-    this.authService.login(this.user)
-        .then(() => {
-          this.toastService.info("You'are Logged SuccessFully", "Created", {
-            timeOut: 5000,
-            positionClass: 'toast-bottom-left',
-            tapToDismiss: true
-          })
-          this.router.navigate(['/clients'])
-        })
-        .catch((err) => {
-          this.toastService.error(err.message, "Error", {
-            timeOut: 5000,
-            positionClass: 'toast-bottom-left',
-            tapToDismiss: true
-          })
-          
-        })
+    this.authService.login(this.user).subscribe((res: any) => {
+      localStorage.setItem('lmv_token', res.idToken)
+      alert(localStorage.getItem('lmv_token'))
+      localStorage.removeItem('lmv_token');
+    })
   }
 
 }

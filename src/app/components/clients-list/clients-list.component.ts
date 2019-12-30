@@ -1,7 +1,10 @@
+import { AuthService } from './../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Client } from './../../models/client';
 import { ClientService } from './../../services/client.service';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-clients-list',
@@ -13,14 +16,28 @@ export class ClientsListComponent implements OnInit {
   clients: Client[] = [];
   resClients: Client[] = [];
   search: string = "";
+  currentUser: Observable<firebase.User>;
 
-  constructor(private clientService: ClientService, private toastService: ToastrService) { }
+  constructor(
+     private authService: AuthService, 
+     private clientService: ClientService, 
+     private toastService: ToastrService) {
+
+      this.currentUser = this.authService.userAuthenticated();
+      
+   }
 
   ngOnInit() {
-    this.clientService.getClients() 
-        .subscribe((res: Client[]) => {
-          this.resClients = this.clients = res;
-        })
+    
+    this.currentUser
+          .subscribe(user => {
+            this.clientService.getClients(user.uid) 
+                .subscribe((res: Client[]) => {
+                  this.resClients = this.clients = res;
+                })
+          })
+
+    
   }
 
   destroyClient(id: string) {
